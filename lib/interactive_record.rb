@@ -4,6 +4,13 @@ require 'active_support/inflector'
 
 
 class InteractiveRecord
+
+  def initialize(options={})
+    options.each do |property, value|
+      self.send("#{property}=", value)
+    end
+  end
+  
   def self.column_names
     DB[:conn].results_as_hash = true
 
@@ -19,12 +26,6 @@ class InteractiveRecord
 
   def self.table_name
     "#{self.to_s.downcase}s"
-  end
-
-  def initialize(options={})
-    options.each do |property, value|
-      self.send("#{property}=", value)
-    end
   end
 
   def save

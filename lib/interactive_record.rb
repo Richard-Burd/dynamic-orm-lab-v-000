@@ -2,10 +2,6 @@ require_relative "../config/environment.rb"
 require 'active_support/inflector'
 
 class InteractiveRecord
-  def self.table_name
-    "#{self.to_s.downcase}s"
-  end
-
   def self.column_names
     DB[:conn].results_as_hash = true
 
@@ -17,6 +13,10 @@ class InteractiveRecord
       column_names << row["name"]
     end
     column_names.compact
+  end
+  
+  def self.table_name
+    "#{self.to_s.downcase}s"
   end
 
   def initialize(options={})
